@@ -368,101 +368,76 @@
     <h1>🌏 아시아 국가별 수도와 문화</h1>
     <p>수행평가지 - 각 지역의 대표 국가를 소개합니다</p>
    </div>
-   <div class="activity-tabs"><button class="tab-button active" onclick="switchActivity('activity1')">활동1: 국가 소개</button> <button class="tab-button" onclick="switchActivity('activity2')">활동2: 함께 여행하고 싶은 국가</button>
+   <div class="activity-tabs">
+    <button class="tab-button active" onclick="switchActivity('activity1')">활동1: 국가 소개</button> <button class="tab-button" onclick="switchActivity('activity2')">활동2: 함께 여행하고 싶은 국가</button>
    </div>
    <div id="activity1" class="activity-content active">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
      <h2 style="font-size: 1.8em; font-weight: 700; color: #333; margin: 0;">국가 소개</h2><button onclick="downloadActivity1PDF()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95em; transition: transform 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">📥 PDF 저장</button>
     </div>
-    <div class="regions-grid">
-     <!-- 동아시아 -->
-     <div class="region-card">
-      <span class="region-label">동아시아</span>
+    <div class="regions-grid"><!-- 동아시아 -->
+     <div class="region-card"><span class="region-label">동아시아</span>
       <div class="country-name">
        일본
       </div>
-      <div class="info-section">
-       <label class="info-label">수도</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-japan')">사진 추가</button> <input type="file" id="capital-japan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">수도</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-japan')">사진 추가</button> <input type="file" id="capital-japan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
-      <div class="info-section">
-       <label class="info-label">대표 문화</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-japan')">사진 추가</button> <input type="file" id="culture-japan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">대표 문화</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-japan')">사진 추가</button> <input type="file" id="culture-japan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
      </div><!-- 동남아시아 -->
-     <div class="region-card">
-      <span class="region-label">동남아시아</span>
+     <div class="region-card"><span class="region-label">동남아시아</span>
       <div class="country-name">
        태국
       </div>
-      <div class="info-section">
-       <label class="info-label">수도</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-thailand')">사진 추가</button> <input type="file" id="capital-thailand" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">수도</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-thailand')">사진 추가</button> <input type="file" id="capital-thailand" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
-      <div class="info-section">
-       <label class="info-label">대표 문화</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-thailand')">사진 추가</button> <input type="file" id="culture-thailand" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">대표 문화</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-thailand')">사진 추가</button> <input type="file" id="culture-thailand" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
      </div><!-- 남부 아시아 -->
-     <div class="region-card">
-      <span class="region-label">남부 아시아</span>
+     <div class="region-card"><span class="region-label">남부 아시아</span>
       <div class="country-name">
        인도
       </div>
-      <div class="info-section">
-       <label class="info-label">수도</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-india')">사진 추가</button> <input type="file" id="capital-india" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">수도</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-india')">사진 추가</button> <input type="file" id="capital-india" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
-      <div class="info-section">
-       <label class="info-label">대표 문화</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-india')">사진 추가</button> <input type="file" id="culture-india" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">대표 문화</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-india')">사진 추가</button> <input type="file" id="culture-india" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
      </div><!-- 서남아시아 -->
-     <div class="region-card">
-      <span class="region-label">서남아시아</span>
+     <div class="region-card"><span class="region-label">서남아시아</span>
       <div class="country-name">
        터키
       </div>
-      <div class="info-section">
-       <label class="info-label">수도</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-turkey')">사진 추가</button> <input type="file" id="capital-turkey" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">수도</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-turkey')">사진 추가</button> <input type="file" id="capital-turkey" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
-      <div class="info-section">
-       <label class="info-label">대표 문화</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-turkey')">사진 추가</button> <input type="file" id="culture-turkey" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">대표 문화</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-turkey')">사진 추가</button> <input type="file" id="culture-turkey" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
      </div><!-- 중앙아시아 -->
-     <div class="region-card">
-      <span class="region-label">중앙아시아</span>
+     <div class="region-card"><span class="region-label">중앙아시아</span>
       <div class="country-name">
        카자흐스탄
       </div>
-      <div class="info-section">
-       <label class="info-label">수도</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-kazakhstan')">사진 추가</button> <input type="file" id="capital-kazakhstan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">수도</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-kazakhstan')">사진 추가</button> <input type="file" id="capital-kazakhstan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
-      <div class="info-section">
-       <label class="info-label">대표 문화</label>
-       <div class="info-content">
-        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-kazakhstan')">사진 추가</button> <input type="file" id="culture-kazakhstan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+      <div class="info-section"><label class="info-label">대표 문화</label>
+       <div class="info-content"><input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-kazakhstan')">사진 추가</button> <input type="file" id="culture-kazakhstan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
      </div>
@@ -474,16 +449,22 @@
       <h2 class="activity-title" style="margin-bottom: 0;">함께 여행하고 싶은 아시아 국가 소개</h2><button onclick="downloadPDF()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95em; transition: transform 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">📥 PDF 저장</button>
      </div>
      <div class="activity2-section">
-      <div class="info-section"><label class="info-label">함께가고 싶은 친구 학번</label> <input type="text" class="full-input" placeholder="예: 20301">
+      <div class="info-section">
+       <label class="info-label">함께가고 싶은 친구 학번</label> <input type="text" class="full-input" placeholder="예: 20301">
       </div>
-      <div class="info-section"><label class="info-label">함께가고 싶은 친구 이름</label> <input type="text" class="full-input" placeholder="예: 김철수">
+      <div class="info-section">
+       <label class="info-label">함께가고 싶은 친구 이름</label> <input type="text" class="full-input" placeholder="예: 김철수">
       </div>
-      <div class="info-section"><label class="info-label">함께 가고 싶은 국가</label> <input type="text" class="full-input" placeholder="예: 태국">
+      <div class="info-section">
+       <label class="info-label">함께 가고 싶은 국가</label> <input type="text" class="full-input" placeholder="예: 태국">
       </div>
      </div>
-     <div class="activity2-section"><label class="info-label">관광지 소개</label>
-      <div class="tourism-content"><textarea class="tourism-textarea" placeholder="가고 싶은 국가의 관광지를 소개해주세요. (예: 방콕의 왓 아룬은 태국에서 가장 유명한 사원입니다...)"></textarea>
-       <div class="tourism-button-area"><button class="image-button" onclick="triggerImageUpload(this, 'tourism-image')">사진 추가</button> <input type="file" id="tourism-image" class="hidden-input" accept="image/*" onchange="handleTourismImage(this)">
+     <div class="activity2-section">
+      <label class="info-label">관광지 소개</label>
+      <div class="tourism-content">
+       <textarea class="tourism-textarea" placeholder="가고 싶은 국가의 관광지를 소개해주세요. (예: 방콕의 왓 아룬은 태국에서 가장 유명한 사원입니다...)"></textarea>
+       <div class="tourism-button-area">
+        <button class="image-button" onclick="triggerImageUpload(this, 'tourism-image')">사진 추가</button> <input type="file" id="tourism-image" class="hidden-input" accept="image/*" onchange="handleTourismImage(this)">
        </div>
       </div>
       <div id="tourism-image-preview" class="tourism-image-preview"></div>
@@ -609,12 +590,12 @@
         margin: 10,
         filename: '아시아국가소개.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
+        html2canvas: { scale: 3, useCORS: true, logging: false },
         jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
       };
 
       html2pdf().set(opt).from(element).save();
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd71390631eea07',t:'MTc3MzY5ODkwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd717191365ea07',t:'MTc3MzY5OTA1MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
