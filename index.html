@@ -3,30 +3,257 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>세계 기후 탐구 학습지</title>
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <title>아시아 국가별 수도와 문화 - 수행평가지</title>
   <style>
     * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
       -webkit-user-select: none;
       -moz-user-select: none;
-      user-select: none;
-    }
-    
-    input, textarea {
-      -webkit-user-select: text;
-      -moz-user-select: text;
-      user-select: text;
+      -ms-user-select: none;
     }
 
-    @media print {
-      body {
-        background: white;
+    html, body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 40px;
+      padding: 30px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+
+    .header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 1.1em;
+      opacity: 0.9;
+    }
+
+    .regions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+
+    .region-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      pointer-events: auto;
+    }
+
+    .region-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .region-label {
+      display: inline-block;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .country-name {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 20px;
+      word-break: keep-all;
+    }
+
+    .info-section {
+      margin-bottom: 18px;
+    }
+
+    .info-label {
+      font-size: 0.9em;
+      font-weight: 600;
+      color: #667eea;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .info-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8f9ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      min-height: 50px;
+      border: 2px dashed #e0e0e0;
+    }
+
+    .info-text {
+      flex: 1;
+      color: #555;
+      font-size: 1em;
+      line-height: 1.5;
+    }
+
+    .info-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 1em;
+      color: #333;
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      padding: 0;
+      outline: none;
+    }
+
+    .info-input::placeholder {
+      color: #ccc;
+    }
+
+    .image-button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85em;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .image-button:hover {
+      transform: scale(1.05);
+      opacity: 0.9;
+    }
+
+    .image-button:active {
+      transform: scale(0.95);
+    }
+
+    .image-preview {
+      width: 60px;
+      height: 60px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 2px solid #ddd;
+    }
+
+    .hidden-input {
+      display: none;
+    }
+
+    .info-empty {
+      color: #999;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.8em;
       }
-      .no-print {
-        display: none;
+
+      .region-card {
+        padding: 20px;
       }
+
+      .country-name {
+        font-size: 1.5em;
+      }
+
+      .regions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 복사 방지 설정 */
+    body {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      user-select: none;
+    }
+
+    ::selection {
+      background: transparent;
+    }
+
+    ::-moz-selection {
+      background: transparent;
+    }
+
+    .activity-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      background: white;
+      color: #667eea;
+      border: 2px solid #667eea;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    .tab-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .tab-button.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: transparent;
+    }
+
+    .activity-content {
+      display: none;
+    }
+
+    .activity-content.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
     }
 
     @keyframes fadeIn {
@@ -40,251 +267,354 @@
       }
     }
 
-    .animate-fade-in {
-      animation: fadeIn 0.5s ease-out;
+    .activity2-card {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
-    .climate-card {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    .activity-title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 30px;
+      text-align: center;
     }
 
-    .climate-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    .activity2-section {
+      margin-bottom: 35px;
+      padding-bottom: 35px;
+      border-bottom: 2px solid #f0f0f0;
     }
 
-    textarea.input-area {
+    .activity2-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .full-input {
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1em;
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: border-color 0.3s ease;
+    }
+
+    .full-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .tourism-content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .tourism-textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1em;
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
       resize: vertical;
-      min-height: 80px;
+      transition: border-color 0.3s ease;
     }
 
-    .table-header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+    .tourism-textarea:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .tourism-button-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    .tourism-image-preview {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      min-height: 20px;
+    }
+
+    .tourism-image-preview img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 2px solid #ddd;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
   </style>
   <style>body { box-sizing: border-box; }</style>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com/3.4.17" type="text/javascript"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
- <body class="bg-gradient-to-br from-blue-50 to-indigo-100 h-full">
-  <div class="w-full h-full overflow-auto">
-   <div class="max-w-6xl mx-auto px-4 py-8">
-    <!-- 헤더 -->
-    <div class="text-center mb-12 animate-fade-in">
-     <h1 class="text-4xl font-bold text-gray-800 mb-2">🌍 세계 기후 탐구</h1>
-     <p class="text-gray-600 text-lg">열대, 건조, 온대, 한대 기후를 탐구하고 학습해봅시다</p>
-     <div class="h-1 w-24 bg-gradient-to-r from-indigo-500 to-purple-600 mx-auto mt-4 rounded-full"></div>
-    </div><!-- 활동 1: 기후 분석 표 -->
-    <div class="bg-white rounded-lg shadow-lg p-8 mb-8 animate-fade-in">
-     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-3xl font-bold text-gray-800"><span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">활동 1</span> 기후 분석</h2><span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold">4가지 기후대 분석</span>
-     </div><!-- 분석 표 -->
-     <div class="overflow-x-auto">
-      <table class="w-full border-collapse">
-       <thead>
-        <tr class="table-header">
-         <th class="border border-gray-300 px-4 py-3 text-left">구분</th>
-         <th class="border border-gray-300 px-4 py-3 text-left">(가)</th>
-         <th class="border border-gray-300 px-4 py-3 text-left">(나)</th>
-         <th class="border border-gray-300 px-4 py-3 text-left">(다)</th>
-         <th class="border border-gray-300 px-4 py-3 text-left">(라)</th>
-        </tr>
-       </thead>
-       <tbody>
-        <tr class="bg-gray-50 hover:bg-gray-100 transition">
-         <td class="border border-gray-300 px-4 py-3 font-semibold bg-indigo-50">시장 상품</td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="상품을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="상품을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="상품을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="상품을 입력하세요"></textarea></td>
-        </tr>
-        <tr class="hover:bg-gray-100 transition">
-         <td class="border border-gray-300 px-4 py-3 font-semibold bg-indigo-50">사람의 생김새<br>
-           &amp; 옷차림</td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="생김새와 옷차림을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="생김새와 옷차림을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="생김새와 옷차림을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="생김색와 옷차림을 입력하세요"></textarea></td>
-        </tr>
-        <tr class="bg-gray-50 hover:bg-gray-100 transition">
-         <td class="border border-gray-300 px-4 py-3 font-semibold bg-indigo-50">주변 환경</td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="주변 환경을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="주변 환경을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="주변 환경을 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="주변 환경을 입력하세요"></textarea></td>
-        </tr>
-        <tr class="hover:bg-gray-100 transition">
-         <td class="border border-gray-300 px-4 py-3 font-semibold bg-indigo-50">유추 가능한<br>
-           기후</td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="기후를 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="기후를 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="기후를 입력하세요"></textarea></td>
-         <td class="border border-gray-300 px-4 py-3"><textarea class="input-area w-full border border-indigo-200 rounded px-2 py-1 text-sm" placeholder="기후를 입력하세요"></textarea></td>
-        </tr>
-       </tbody>
-      </table>
-     </div>
-    </div><!-- 활동 2: 심화 탐구 및 자기평가 -->
-    <div class="bg-white rounded-lg shadow-lg p-8 mb-8 animate-fade-in">
-     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-3xl font-bold text-gray-800"><span class="bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">활동 2</span> 심화 탐구</h2><span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-semibold">선택 활동</span>
-     </div>
-     <div class="mb-6">
-      <label class="block text-lg font-semibold text-gray-800 mb-3"> 어느 지역을 선택하시나요? </label>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-       <button onclick="selectRegion('가')" class="region-btn px-4 py-2 rounded-lg border-2 border-indigo-300 text-gray-700 hover:bg-indigo-50 transition font-semibold" data-region="가"> (가) </button> <button onclick="selectRegion('나')" class="region-btn px-4 py-2 rounded-lg border-2 border-indigo-300 text-gray-700 hover:bg-indigo-50 transition font-semibold" data-region="나"> (나) </button> <button onclick="selectRegion('다')" class="region-btn px-4 py-2 rounded-lg border-2 border-indigo-300 text-gray-700 hover:bg-indigo-50 transition font-semibold" data-region="다"> (다) </button> <button onclick="selectRegion('라')" class="region-btn px-4 py-2 rounded-lg border-2 border-indigo-300 text-gray-700 hover:bg-indigo-50 transition font-semibold" data-region="라"> (라) </button>
+ <body>
+  <div class="container">
+   <div class="header">
+    <h1>🌏 아시아 국가별 수도와 문화</h1>
+    <p>수행평가지 - 각 지역의 대표 국가를 소개합니다</p>
+   </div>
+   <div class="activity-tabs"><button class="tab-button active" onclick="switchActivity('activity1')">활동1: 국가 소개</button> <button class="tab-button" onclick="switchActivity('activity2')">활동2: 함께 여행하고 싶은 국가</button>
+   </div>
+   <div id="activity1" class="activity-content active">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+     <h2 style="font-size: 1.8em; font-weight: 700; color: #333; margin: 0;">국가 소개</h2><button onclick="downloadActivity1PDF()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95em; transition: transform 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">📥 PDF 저장</button>
+    </div>
+    <div class="regions-grid">
+     <!-- 동아시아 -->
+     <div class="region-card">
+      <span class="region-label">동아시아</span>
+      <div class="country-name">
+       일본
       </div>
-     </div>
-     <div id="activity2-content" class="hidden">
-      <div class="bg-indigo-50 rounded-lg p-6 mb-6">
-       <p class="text-gray-700 mb-4">선택 완료. 아래 질문에 답해주세요.</p>
-       <div class="mb-6">
-        <label class="block text-lg font-semibold text-gray-800 mb-3"> (1) 내가 사진 속 장소에 있다면 어떤 느낌이 드는가? </label>
-        <p class="text-sm text-gray-600 mb-3">소리, 냄새, 감정 등을 자유롭게 표현해주세요</p><textarea id="feeling-input" class="input-area w-full border-2 border-indigo-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:border-indigo-500" placeholder="예: 습하고 더운 공기가 느껴지고, 새소리와 물소리가 들리며 생동감이 넘친다..."></textarea>
-       </div>
-       <div class="mb-6">
-        <label class="block text-lg font-semibold text-gray-800 mb-3"> (2) 내가 사진 속 장소에 있다면 사진 속 사람들에게 어떤 질문을 하고 싶은가? </label>
-        <p class="text-sm text-gray-600 mb-3">궁금한 점을 질문 형태로 작성해주세요</p><textarea id="question-input" class="input-area w-full border-2 border-indigo-300 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:border-indigo-500" placeholder="예: 이 지역의 전통 음식은 무엇인가요? 여름과 겨울은 어떻게 다른가요?..."></textarea>
-       </div>
-      </div><!-- 자기평가 표 -->
-      <div class="mb-6">
-       <h3 class="text-2xl font-bold text-gray-800 mb-4">📋 오늘 활동 자기평가</h3>
-       <div class="overflow-x-auto">
-        <table class="w-full border-collapse">
-         <thead>
-          <tr class="table-header">
-           <th class="border border-gray-300 px-4 py-3 text-left w-1/2">평가 항목</th>
-           <th class="border border-gray-300 px-4 py-3 text-center">평가</th>
-          </tr>
-         </thead>
-         <tbody>
-          <tr class="bg-gray-50 hover:bg-gray-100 transition">
-           <td class="border border-gray-300 px-4 py-3 font-semibold">기후의 특징을 이해했는가?</td>
-           <td class="border border-gray-300 px-4 py-3">
-            <div class="flex justify-center gap-2">
-             <button onclick="setEvaluation('q1', '상')" class="eval-btn eval-btn-q1 px-3 py-1 rounded border border-gray-300 hover:bg-green-100 transition" data-value="상">상</button> <button onclick="setEvaluation('q1', '중')" class="eval-btn eval-btn-q1 px-3 py-1 rounded border border-gray-300 hover:bg-yellow-100 transition" data-value="중">중</button> <button onclick="setEvaluation('q1', '하')" class="eval-btn eval-btn-q1 px-3 py-1 rounded border border-gray-300 hover:bg-red-100 transition" data-value="하">하</button>
-            </div></td>
-          </tr>
-          <tr class="hover:bg-gray-100 transition">
-           <td class="border border-gray-300 px-4 py-3 font-semibold">표를 정확하게 작성했는가?</td>
-           <td class="border border-gray-300 px-4 py-3">
-            <div class="flex justify-center gap-2">
-             <button onclick="setEvaluation('q2', '상')" class="eval-btn eval-btn-q2 px-3 py-1 rounded border border-gray-300 hover:bg-green-100 transition" data-value="상">상</button> <button onclick="setEvaluation('q2', '중')" class="eval-btn eval-btn-q2 px-3 py-1 rounded border border-gray-300 hover:bg-yellow-100 transition" data-value="중">중</button> <button onclick="setEvaluation('q2', '하')" class="eval-btn eval-btn-q2 px-3 py-1 rounded border border-gray-300 hover:bg-red-100 transition" data-value="하">하</button>
-            </div></td>
-          </tr>
-          <tr class="bg-gray-50 hover:bg-gray-100 transition">
-           <td class="border border-gray-300 px-4 py-3 font-semibold">질문을 창의적으로 작성했는가?</td>
-           <td class="border border-gray-300 px-4 py-3">
-            <div class="flex justify-center gap-2">
-             <button onclick="setEvaluation('q3', '상')" class="eval-btn eval-btn-q3 px-3 py-1 rounded border border-gray-300 hover:bg-green-100 transition" data-value="상">상</button> <button onclick="setEvaluation('q3', '중')" class="eval-btn eval-btn-q3 px-3 py-1 rounded border border-gray-300 hover:bg-yellow-100 transition" data-value="중">중</button> <button onclick="setEvaluation('q3', '하')" class="eval-btn eval-btn-q3 px-3 py-1 rounded border border-gray-300 hover:bg-red-100 transition" data-value="하">하</button>
-            </div></td>
-          </tr>
-          <tr class="hover:bg-gray-100 transition">
-           <td class="border border-gray-300 px-4 py-3 font-semibold">활동에 적극적으로 참여했는가?</td>
-           <td class="border border-gray-300 px-4 py-3">
-            <div class="flex justify-center gap-2">
-             <button onclick="setEvaluation('q4', '상')" class="eval-btn eval-btn-q4 px-3 py-1 rounded border border-gray-300 hover:bg-green-100 transition" data-value="상">상</button> <button onclick="setEvaluation('q4', '중')" class="eval-btn eval-btn-q4 px-3 py-1 rounded border border-gray-300 hover:bg-yellow-100 transition" data-value="중">중</button> <button onclick="setEvaluation('q4', '하')" class="eval-btn eval-btn-q4 px-3 py-1 rounded border border-gray-300 hover:bg-red-100 transition" data-value="하">하</button>
-            </div></td>
-          </tr>
-         </tbody>
-        </table>
+      <div class="info-section">
+       <label class="info-label">수도</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-japan')">사진 추가</button> <input type="file" id="capital-japan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
        </div>
       </div>
-      <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded mb-6">
-       <p class="text-gray-700"><span class="font-semibold">💭 활동을 마치며:</span> 오늘 활동에서 배운 점, 새로운 발견, 또는 더 알고 싶은 점이 있으면 자유롭게 작성해주세요.</p><textarea id="reflection-input" class="input-area w-full border-2 border-yellow-200 rounded-lg px-4 py-3 text-gray-700 focus:outline-none focus:border-yellow-400 mt-3" placeholder="예: 기후에 따라 사람들의 생활이 이렇게 다르다는 것을 알게 되었다..."></textarea>
+      <div class="info-section">
+       <label class="info-label">대표 문화</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-japan')">사진 추가</button> <input type="file" id="culture-japan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+     </div><!-- 동남아시아 -->
+     <div class="region-card">
+      <span class="region-label">동남아시아</span>
+      <div class="country-name">
+       태국
+      </div>
+      <div class="info-section">
+       <label class="info-label">수도</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-thailand')">사진 추가</button> <input type="file" id="capital-thailand" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+      <div class="info-section">
+       <label class="info-label">대표 문화</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-thailand')">사진 추가</button> <input type="file" id="culture-thailand" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+     </div><!-- 남부 아시아 -->
+     <div class="region-card">
+      <span class="region-label">남부 아시아</span>
+      <div class="country-name">
+       인도
+      </div>
+      <div class="info-section">
+       <label class="info-label">수도</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-india')">사진 추가</button> <input type="file" id="capital-india" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+      <div class="info-section">
+       <label class="info-label">대표 문화</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-india')">사진 추가</button> <input type="file" id="culture-india" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+     </div><!-- 서남아시아 -->
+     <div class="region-card">
+      <span class="region-label">서남아시아</span>
+      <div class="country-name">
+       터키
+      </div>
+      <div class="info-section">
+       <label class="info-label">수도</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-turkey')">사진 추가</button> <input type="file" id="capital-turkey" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+      <div class="info-section">
+       <label class="info-label">대표 문화</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-turkey')">사진 추가</button> <input type="file" id="culture-turkey" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+     </div><!-- 중앙아시아 -->
+     <div class="region-card">
+      <span class="region-label">중앙아시아</span>
+      <div class="country-name">
+       카자흐스탄
+      </div>
+      <div class="info-section">
+       <label class="info-label">수도</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="수도를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'capital-kazakhstan')">사진 추가</button> <input type="file" id="capital-kazakhstan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
+      </div>
+      <div class="info-section">
+       <label class="info-label">대표 문화</label>
+       <div class="info-content">
+        <input type="text" class="info-input" placeholder="대표 문화를 입력하세요"> <button class="image-button" onclick="triggerImageUpload(this, 'culture-kazakhstan')">사진 추가</button> <input type="file" id="culture-kazakhstan" class="hidden-input" accept="image/*" onchange="handleImageUpload(this)">
+       </div>
       </div>
      </div>
-    </div><!-- 캡처 축소 옵션 및 버튼 -->
-    <div class="flex justify-center gap-4 mb-8 no-print">
-     <button onclick="printPage()" class="flex items-center gap-2 bg-blue-500 text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:shadow-xl transition transform hover:scale-105"> <i data-lucide="printer"></i> 인쇄 </button> <button onclick="resetForm()" class="flex items-center gap-2 bg-gray-400 text-white px-8 py-3 rounded-lg font-bold shadow-lg hover:shadow-xl transition transform hover:scale-105"> <i data-lucide="rotate-ccw"></i> 초기화 </button>
     </div>
    </div>
-   <script>
-    let selectedRegion = null;
-    let evaluations = {};
-
-    function selectRegion(region) {
-      selectedRegion = region;
-      const content = document.getElementById('activity2-content');
-      
-      content.classList.remove('hidden');
-      
-      document.querySelectorAll('.region-btn').forEach(btn => {
-        btn.classList.remove('bg-indigo-500', 'text-white', 'border-indigo-500');
-        if (btn.dataset.region === region) {
-          btn.classList.add('bg-indigo-500', 'text-white', 'border-indigo-500');
-        }
-      });
-      
-      content.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    function setEvaluation(question, value) {
-      evaluations[question] = value;
-      
-      const buttons = document.querySelectorAll(`.eval-btn-${question}`);
-      buttons.forEach(btn => {
-        btn.classList.remove('bg-green-100', 'bg-yellow-100', 'bg-red-100', 'font-bold');
-        if (btn.dataset.value === value) {
-          if (value === '상') btn.classList.add('bg-green-100', 'font-bold');
-          else if (value === '중') btn.classList.add('bg-yellow-100', 'font-bold');
-          else btn.classList.add('bg-red-100', 'font-bold');
-        }
-      });
-    }
-
-    async function printPage() {
-      const button = event.target.closest('button');
-      const originalHTML = button.innerHTML;
-      
-      button.innerHTML = '<i data-lucide="loader"></i> 인쇄 준비 중...';
-      button.disabled = true;
-      lucide.createIcons();
-
-      try {
-        window.print();
-        showNotification('✅ 인쇄 준비가 완료되었습니다!');
-      } catch (error) {
-        console.error('인쇄 실패:', error);
-        showNotification('❌ 인쇄에 실패했습니다.');
-      } finally {
-        button.innerHTML = originalHTML;
-        button.disabled = false;
-        lucide.createIcons();
-      }
-    }
-
-    function showNotification(message) {
-      const notification = document.createElement('div');
-      notification.className = 'fixed top-4 left-1/2 transform -translate-x-1/2 bg-blue-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      
-      setTimeout(() => {
-        notification.remove();
-      }, 3000);
-    }
-
-    function resetForm() {
-      document.querySelectorAll('textarea').forEach(ta => ta.value = '');
-      selectedRegion = null;
-      evaluations = {};
-      document.getElementById('activity2-content').classList.add('hidden');
-      document.querySelectorAll('.region-btn').forEach(btn => {
-        btn.classList.remove('bg-indigo-500', 'text-white', 'border-indigo-500');
-      });
-      document.querySelectorAll('.eval-btn').forEach(btn => {
-        btn.classList.remove('bg-green-100', 'bg-yellow-100', 'bg-red-100', 'font-bold');
-      });
-      window.scrollTo(0, 0);
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      lucide.createIcons();
-    });
-  </script>
+   <div id="activity2" class="activity-content">
+    <div class="activity2-card">
+     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+      <h2 class="activity-title" style="margin-bottom: 0;">함께 여행하고 싶은 아시아 국가 소개</h2><button onclick="downloadPDF()" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; padding: 12px 24px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.95em; transition: transform 0.2s ease, opacity 0.2s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">📥 PDF 저장</button>
+     </div>
+     <div class="activity2-section">
+      <div class="info-section"><label class="info-label">함께가고 싶은 친구 학번</label> <input type="text" class="full-input" placeholder="예: 20301">
+      </div>
+      <div class="info-section"><label class="info-label">함께가고 싶은 친구 이름</label> <input type="text" class="full-input" placeholder="예: 김철수">
+      </div>
+      <div class="info-section"><label class="info-label">함께 가고 싶은 국가</label> <input type="text" class="full-input" placeholder="예: 태국">
+      </div>
+     </div>
+     <div class="activity2-section"><label class="info-label">관광지 소개</label>
+      <div class="tourism-content"><textarea class="tourism-textarea" placeholder="가고 싶은 국가의 관광지를 소개해주세요. (예: 방콕의 왓 아룬은 태국에서 가장 유명한 사원입니다...)"></textarea>
+       <div class="tourism-button-area"><button class="image-button" onclick="triggerImageUpload(this, 'tourism-image')">사진 추가</button> <input type="file" id="tourism-image" class="hidden-input" accept="image/*" onchange="handleTourismImage(this)">
+       </div>
+      </div>
+      <div id="tourism-image-preview" class="tourism-image-preview"></div>
+     </div>
+    </div>
+   </div>
   </div>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dcb46fd37cdd7e0',t:'MTc3MzU3NTE4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <script>
+    // 복사 방지
+    document.addEventListener('copy', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('cut', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // 우클릭 컨텍스트 메뉴 제한
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // 개발자 도구 단축키 방지
+    document.addEventListener('keydown', function(e) {
+      // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C 방지
+      if (e.key === 'F12' || 
+          (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+          (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+          (e.ctrlKey && e.shiftKey && e.key === 'C')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    function triggerImageUpload(button, inputId) {
+      document.getElementById(inputId).click();
+    }
+
+    function handleImageUpload(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      // 이미지 크기 검증 (5MB 제한)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('파일 크기가 너무 큽니다. 5MB 이하의 파일을 선택해주세요.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const infoContent = input.parentElement.closest('.info-content');
+        let existingImage = infoContent.querySelector('.image-preview');
+        
+        if (existingImage) {
+          existingImage.src = e.target.result;
+        } else {
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.className = 'image-preview';
+          infoContent.insertBefore(img, infoContent.querySelector('.image-button'));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function switchActivity(activityId) {
+      // 모든 활동 콘텐츠 숨기기
+      document.querySelectorAll('.activity-content').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      // 모든 탭 버튼 비활성화
+      document.querySelectorAll('.tab-button').forEach(el => {
+        el.classList.remove('active');
+      });
+
+      // 선택된 활동 표시
+      document.getElementById(activityId).classList.add('active');
+
+      // 선택된 탭 버튼 활성화
+      event.target.classList.add('active');
+    }
+
+    function handleTourismImage(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      // 이미지 크기 검증 (5MB 제한)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('파일 크기가 너무 큽니다. 5MB 이하의 파일을 선택해주세요.');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const previewContainer = document.getElementById('tourism-image-preview');
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        previewContainer.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function downloadPDF() {
+      const element = document.querySelector('.activity2-card');
+      const opt = {
+        margin: 10,
+        filename: '아시아국가여행계획.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+
+    function downloadActivity1PDF() {
+      const element = document.querySelector('#activity1');
+      const opt = {
+        margin: 10,
+        filename: '아시아국가소개.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9dd71390631eea07',t:'MTc3MzY5ODkwNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
