@@ -45,8 +45,63 @@ legend { padding: 0 6px; font-weight: 700; }
 .brand-wrap { display: flex; align-items: center; gap: 18px; }
 .brand-wrap h1 { margin: 0 0 6px; font-size: 28px; }
 .brand-wrap p { margin: 0; color: var(--gray-500); }
+.brand-banner {
+  position: relative;
+  width: min(310px, 42vw);
+  flex: 0 0 auto;
+  line-height: 0;
+}
 .brand-image {
-  width: 220px; max-width: 38vw; border-radius: 18px; object-fit: contain; background: #fff;
+  display: block;
+  width: 100%;
+  max-width: none;
+  border-radius: 18px;
+  object-fit: contain;
+  background: #fff;
+}
+.banner-hotspot {
+  position: absolute;
+  bottom: 4%;
+  height: 20%;
+  border: 2px solid transparent;
+  border-radius: 9px;
+  background: transparent;
+  z-index: 4;
+  cursor: pointer;
+}
+.banner-hotspot:hover,
+.banner-hotspot:focus-visible {
+  border-color: rgba(63, 133, 217, .8);
+  background: rgba(255, 255, 255, .22);
+  outline: none;
+}
+.banner-today { left: 2.6%; width: 17.3%; }
+.banner-total { left: 20.5%; width: 17.3%; }
+.banner-friend { left: 39.0%; width: 17.6%; }
+.banner-guestbook { left: 57.4%; width: 19.0%; }
+.banner-like { left: 77.2%; width: 20.0%; }
+.toast {
+  position: fixed;
+  left: 50%;
+  top: 18px;
+  transform: translate(-50%, -20px);
+  min-width: 220px;
+  max-width: calc(100vw - 32px);
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: rgba(39, 48, 71, .94);
+  color: #fff;
+  text-align: center;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: .22s ease;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(39,48,71,.22);
+}
+.toast.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 .save-panel { display: flex; align-items: center; gap: 12px; }
 .save-status {
@@ -99,27 +154,104 @@ legend { padding: 0 6px; font-weight: 700; }
   border: 1px solid #e7eefb; padding: 20px;
 }
 .room-bg {
-  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); width: 92%; max-width: 540px; image-rendering: pixelated; border-radius: 18px;
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  transform: translateX(-50%);
+  width: min(90%, 560px);
+  height: auto;
+  image-rendering: pixelated;
+  border-radius: 18px;
+  z-index: 0;
 }
-.room-prop { position: absolute; image-rendering: pixelated; }
-.prop-window { left: 78px; top: 92px; width: 110px; }
-.prop-tv { right: 96px; bottom: 86px; width: 88px; }
-.prop-teddy { right: 150px; bottom: 102px; width: 88px; }
-.prop-plant { left: 164px; bottom: 98px; width: 72px; }
-.prop-rug { left: 50%; bottom: 38px; transform: translateX(-50%); width: 180px; opacity: 0.92; }
+.room-prop {
+  position: absolute;
+  display: block;
+  height: auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+  pointer-events: none;
+}
+.prop-window { left: 8%; top: 25%; width: clamp(72px, 14%, 112px); z-index: 1; }
+.prop-plant { left: 24%; bottom: 20%; width: clamp(48px, 8%, 68px); z-index: 3; }
+.prop-rug { left: 50%; bottom: 7%; transform: translateX(-50%); width: clamp(130px, 28%, 190px); z-index: 2; }
+.prop-teddy { right: 20%; bottom: 19%; width: clamp(56px, 10%, 78px); z-index: 3; }
+.prop-tv { right: 7%; bottom: 18%; width: clamp(64px, 12%, 90px); z-index: 3; }
 .avatar-stage {
-  position: absolute; left: 50%; bottom: 66px; transform: translateX(-50%); width: 110px; height: 130px; display: grid; place-items: center;
+  position: absolute;
+  left: 50%;
+  bottom: 17%;
+  transform: translateX(-50%);
+  width: 105px;
+  height: 132px;
+  display: grid;
+  place-items: end center;
+  z-index: 5;
+  pointer-events: none;
 }
-.avatar-stage img { width: 95px; image-rendering: pixelated; }
-.pet-stage { position: absolute; left: calc(50% + 88px); bottom: 68px; }
-.pet-stage img { width: 54px; image-rendering: pixelated; }
+.avatar-stage img {
+  display: block;
+  max-width: 92px;
+  max-height: 124px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+.pet-stage {
+  position: absolute;
+  left: calc(50% + 72px);
+  bottom: 16%;
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: end center;
+  z-index: 6;
+  pointer-events: none;
+}
+.pet-stage img {
+  display: block;
+  max-width: 58px;
+  max-height: 58px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
 .speech-bubble {
-  position: absolute; left: 50%; top: 44px; transform: translateX(-50%); width: 220px; height: 126px;
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  transform: translateX(-50%);
+  width: min(230px, 48%);
+  min-width: 185px;
+  aspect-ratio: 112 / 61;
+  z-index: 8;
 }
-.speech-bubble img { width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; }
+.speech-bubble img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+}
 .speech-text {
-  position: absolute; left: 24px; right: 24px; top: 22px; bottom: 34px; display: flex; align-items: center; justify-content: center;
-  text-align: center; font-size: 18px; line-height: 1.35; font-weight: 700;
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  top: 15%;
+  bottom: 22%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-wrap: anywhere;
+  text-align: center;
+  font-size: clamp(13px, 2vw, 17px);
+  line-height: 1.3;
+  font-weight: 700;
+  z-index: 9;
 }
 .palette-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
 .palette-wrap h3 { margin: 0 0 10px; }
@@ -167,4 +299,17 @@ legend { padding: 0 6px; font-weight: 700; }
   .palette-wrap { grid-template-columns: 1fr; }
   .guestbook-compose { grid-template-columns: 1fr; }
   .room-option-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 620px) {
+  .room-preview { min-height: 400px; padding: 12px; }
+  .room-bg { width: 98%; bottom: 16px; }
+  .prop-window { left: 4%; top: 29%; width: 74px; }
+  .prop-plant { left: 18%; bottom: 18%; width: 48px; }
+  .prop-tv { right: 3%; bottom: 18%; width: 64px; }
+  .prop-teddy { right: 17%; bottom: 19%; width: 54px; }
+  .prop-rug { width: 135px; bottom: 7%; }
+  .avatar-stage { bottom: 16%; }
+  .pet-stage { left: calc(50% + 56px); bottom: 15%; }
+  .speech-bubble { top: 8%; width: 205px; min-width: 0; }
 }

@@ -13,12 +13,20 @@
   <div class="app-shell">
     <header class="topbar">
       <div class="brand-wrap">
-        <img src="./assets/original/mini_home_logo.png" alt="미니홈피 로고" class="brand-image" />
+        <div class="brand-banner" id="brandBanner">
+          <img src="./assets/original/mini_home_logo.png" alt="미니홈피 로고" class="brand-image" />
+          <button class="banner-hotspot banner-today" type="button" data-banner-action="today" aria-label="오늘 방문자 확인"></button>
+          <button class="banner-hotspot banner-total" type="button" data-banner-action="total" aria-label="전체 방문자 확인"></button>
+          <button class="banner-hotspot banner-friend" type="button" data-banner-action="friend" aria-label="일촌 설정"></button>
+          <button class="banner-hotspot banner-guestbook" type="button" data-banner-action="guestbook" aria-label="방명록 열기"></button>
+          <button class="banner-hotspot banner-like" type="button" data-banner-action="like" aria-label="좋아요"></button>
+        </div>
         <div>
           <h1>교육용 미니홈피 웹앱</h1>
           <p>학생이 문구를 입력하고, 수정 내용이 자동 저장되는 GitHub Pages용 정적 웹앱</p>
         </div>
       </div>
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
       <div class="save-panel">
         <span id="saveStatus" class="save-status is-saved">자동 저장 준비 완료</span>
         <button id="resetBtn" class="utility-btn" type="button">초기화</button>

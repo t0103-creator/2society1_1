@@ -11,6 +11,9 @@ const defaultState = {
   bubble: 'bubble_white.png',
   avatar: 'avatar_girl.png',
   pet: 'pet_cat_white.png',
+  isFriend: false,
+  liked: false,
+  likeCount: 0,
   guestbook: []
 };
 
@@ -42,7 +45,8 @@ const el = {
   addGuestBtn: document.getElementById('addGuestBtn'),
   guestbookList: document.getElementById('guestbookList'),
   guestCount: document.getElementById('guestCount'),
-  todayDate: document.getElementById('todayDate')
+  todayDate: document.getElementById('todayDate'),
+  toast: document.getElementById('toast')
 };
 
 initialize();
@@ -52,6 +56,7 @@ function initialize() {
   bindInputs();
   bindChoices();
   bindActions();
+  bindBannerActions();
   applyStateToInputs();
   renderAll();
   updateTodayDate();
@@ -60,10 +65,7 @@ function initialize() {
 function bindTabs() {
   document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(item => item.classList.remove('is-active'));
-      document.querySelectorAll('.tab-section').forEach(item => item.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      document.getElementById(`tab-${btn.dataset.tab}`).classList.add('is-active');
+      showTab(btn.dataset.tab);
     });
   });
 }
@@ -123,6 +125,66 @@ function bindChoices() {
       scheduleSave();
     });
   });
+}
+
+
+function bindBannerActions() {
+  document.querySelectorAll('[data-banner-action]').forEach(button => {
+    button.addEventListener('click', () => {
+      const action = button.dataset.bannerAction;
+
+      if (action === 'today') {
+        showTab('room');
+        showToast(`TODAY ${document.getElementById('todayCount').textContent}명`);
+        return;
+      }
+
+      if (action === 'total') {
+        showTab('room');
+        showToast(`TOTAL ${document.getElementById('totalCount').textContent}명`);
+        return;
+      }
+
+      if (action === 'friend') {
+        state.isFriend = !state.isFriend;
+        scheduleSave();
+        showToast(state.isFriend ? '일촌으로 등록했습니다.' : '일촌을 해제했습니다.');
+        return;
+      }
+
+      if (action === 'guestbook') {
+        showTab('guestbook');
+        showToast('방명록을 열었습니다.');
+        window.setTimeout(() => el.guestAuthor.focus(), 80);
+        return;
+      }
+
+      if (action === 'like') {
+        state.liked = !state.liked;
+        state.likeCount = Math.max(0, (Number(state.likeCount) || 0) + (state.liked ? 1 : -1));
+        scheduleSave();
+        showToast(state.liked ? `사랑해요 ♥ ${state.likeCount}` : '좋아요를 취소했습니다.');
+      }
+    });
+  });
+}
+
+function showTab(tabName) {
+  document.querySelectorAll('.tab-btn').forEach(item => {
+    item.classList.toggle('is-active', item.dataset.tab === tabName);
+  });
+  document.querySelectorAll('.tab-section').forEach(item => item.classList.remove('is-active'));
+  const target = document.getElementById(`tab-${tabName}`);
+  if (target) target.classList.add('is-active');
+}
+
+let toastTimer = null;
+function showToast(message) {
+  if (!el.toast) return;
+  el.toast.textContent = message;
+  el.toast.classList.add('is-visible');
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => el.toast.classList.remove('is-visible'), 1600);
 }
 
 function bindActions() {
